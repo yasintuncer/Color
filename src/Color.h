@@ -8,8 +8,8 @@ namespace Color
         double r;
         double g;
         double b;
-        Rgb() : r(0), g(0), b(0) {}
-        Rgb(double r, double g, double b) : r(r), g(g), b(b) {}
+        Rgb() { r = 0, g = 0, b = 0; }
+        Rgb(double r_, double g_, double b_) { r = r_, g = g_, b = b_; }
         ~Rgb() {}
         Rgb &operator=(Rgb &other)
         {
@@ -19,10 +19,8 @@ namespace Color
             return *this;
         }
         template <typename TColor>
-        TColor To();
+        void To(TColor &other);
 
-        template <typename TColor>
-        Rgb From(TColor &other);
     } Rgb;
 
     typedef struct Cmyk
@@ -31,8 +29,8 @@ namespace Color
         double m;
         double y;
         double k;
-        Cmyk() : c(0), m(0), y(0), k(0) {}
-        Cmyk(double c, double m, double y, double k) : c(c), m(m), y(y), k(k) {}
+        Cmyk() { c = 0, m = 0, y = 0, k = 0; }
+        Cmyk(double c_, double m_, double y_, double k_) { c = c_, m = m_, y = y_, k = k_; }
         ~Cmyk() {}
         Cmyk &operator=(Cmyk &other)
         {
@@ -43,10 +41,10 @@ namespace Color
             return *this;
         }
         template <typename TColor>
-        TColor To();
+        void To(TColor &other);
 
-        template <typename TColor>
-        Cmyk From(TColor &other);
+        void ToRgb(Rgb &rgb);
+
     } Cmyk;
 
     typedef struct Hsv
@@ -54,8 +52,8 @@ namespace Color
         double h;
         double s;
         double v;
-        Hsv() : h(0), s(0), v(0) {}
-        Hsv(double h, double s, double v) : h(h), s(s), v(v) {}
+        Hsv() { h = 0, s = 0, v = 0; }
+        Hsv(double h_, double s_, double v_) { h = h_, s = s_, v = v_; }
         ~Hsv() {}
         Hsv &operator=(Hsv &other)
         {
@@ -64,20 +62,24 @@ namespace Color
             v = other.v;
             return *this;
         }
-        template <typename TColor>
-        TColor To();
 
         template <typename TColor>
-        Hsv From(TColor &other);
+        void To(TColor &other);
+
+        void ToRgb(Rgb &rgb);
+
     } Hsv;
-    
+
     typedef struct Lab
     {
         double l;
         double a;
         double b;
-        Lab() : l(0), a(0), b(0) {}
-        Lab(double l, double a, double b) : l(l), a(a), b(b) {}
+        double ref_x;
+        double ref_y;
+        double ref_z;
+        Lab() { l = 0, a = 0, b = 0;}
+        Lab(double l_, double a_, double b_) { l = l_, a = a_, b = b_; }
         ~Lab() {}
         Lab &operator=(Lab &other)
         {
@@ -87,10 +89,9 @@ namespace Color
             return *this;
         }
         template <typename TColor>
-        TColor To();
+        void To(TColor &other);
+        void ToRgb(Rgb &rgb);
 
-        template <typename TColor>
-        Lab From(TColor &other);
     } Lab;
 
     struct Xyz
@@ -101,8 +102,8 @@ namespace Color
         double kappa;
         double epsilon;
         double whitePoint[3];
-        Xyz() : x(0), y(0), z(0) {}
-        Xyz(double x, double y, double z) : x(x), y(y), z(z) {}
+        Xyz() { x = 0, y = 0, z = 0; }
+        Xyz(double x_, double y_, double z_) { x = x_, y = y_, z = z_; }
         ~Xyz() {}
         Xyz &operator=(Xyz &other)
         {
@@ -112,15 +113,9 @@ namespace Color
             return *this;
         }
         template <typename TColor>
-        TColor To();
-
-        template <typename TColor>
-        Xyz From(TColor &other);
-
+        void To(TColor &other);
+        void ToRgb(Rgb &rgb);
     };
-    
-    
-    
 
 }
 #endif // COLOR_H
