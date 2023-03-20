@@ -44,8 +44,6 @@ namespace Color
     {
         double c, m, y;
         cmyk_to_cmy(this->c, this->m, this->y, this->k, c, m, y);
-        std::cout << "cmylaallp: " << c << " " << m << " " << y << std::endl;
-
         cmy_to_rgb(c, m, y, rgb.r, rgb.g, rgb.b);
         rgb.r = std::round(rgb.r);
         rgb.g = std::round(rgb.g);
